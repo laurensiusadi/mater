@@ -57,7 +57,7 @@ const initiateUI = () => {
   for (let i = 0; i <= sliderCount; i++) {
     const child = document.createElement('span')
     child.classList.add('minute')
-    child.innerText = i * 5
+    child.textContent = i * 5
     slider.append(child)
   }
 
