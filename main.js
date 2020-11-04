@@ -52,6 +52,21 @@ mb.on('after-create-window', () => {
       ]
     },
     {
+      label: 'Sound Effect',
+      submenu: [
+        { label: 'On',
+          type: 'radio',
+          checked: true,
+          click: () => mb.window.webContents.send('TOGGLE_SOUND', true)
+        },
+        { label: 'Off',
+          type: 'radio',
+          checked: false,
+          click: () => mb.window.webContents.send('TOGGLE_SOUND', false)
+        }
+      ]
+    },
+    {
       label: 'Quit',
       click: () => {
         mb.app.quit()

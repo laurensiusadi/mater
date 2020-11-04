@@ -18,6 +18,7 @@ const slider = document.querySelector('.js-slider')
 const soundWindup = new Audio(path.join(__dirname, '/wav/windup.wav'))
 const soundClick = new Audio(path.join(__dirname, '/wav/click.wav'))
 const soundDing = new Audio(path.join(__dirname, '/wav/ding.wav'))
+let soundEnabled = true
 
 let state = ''
 let currentMinute = 0
@@ -40,7 +41,9 @@ const getCurrentSliderWidth = () => state === 'breaking' ? breakMinutes*20 : wor
 
 const playSound = sound => {
   sound.currentTime = 0
-  sound.play()
+  if (soundEnabled) {
+    sound.play()
+  }
 }
 
 // UI Control
@@ -158,4 +161,8 @@ ipcRenderer.on('CHANGE_TIMER', (event, data) => {
   setCurrentMinute(workMinutes)
   mb.showWindow()
   slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
+})
+
+ipcRenderer.on('TOGGLE_SOUND', (event, data) => {
+  soundEnabled = data
 })
