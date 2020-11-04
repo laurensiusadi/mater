@@ -4,8 +4,8 @@
 // =============================================================================
 
 // Get menubar instance from main.js
-const { mb } = require('electron').remote.getGlobal('sharedObject')
-const { ipcRenderer } = require('electron')
+const {mb} = require('electron').remote.getGlobal('sharedObject')
+const {ipcRenderer} = require('electron')
 const path = require('path')
 const Timer = require('tiny-timer')
 
@@ -37,7 +37,7 @@ const msToMin = ms => ms / 60 / 1000
 
 const getCurrentMinutes = () => state === 'breaking' ? breakMinutes : workMinutes
 
-const getCurrentSliderWidth = () => state === 'breaking' ? breakMinutes*20 : workMinutes*20
+const getCurrentSliderWidth = () => state === 'breaking' ? breakMinutes * 20 : workMinutes * 20
 
 const playSound = sound => {
   sound.currentTime = 0
@@ -50,19 +50,20 @@ const playSound = sound => {
 // =============================================================================
 
 const initiateUI = () => {
-  let sliderCount = maxMinutes/5
-  slider.style.width = (sliderCount+1) * 100 + 'px'
-  slider.style.left = (sliderCount+1) * 50 - 3 + 'px'
+  const sliderCount = maxMinutes / 5
+  slider.style.width = ((sliderCount + 1) * 100) + 'px'
+  slider.style.left = (((sliderCount + 1) * 50) - 3) + 'px'
   slider.innerHTML = ''
   for (let i = 0; i <= sliderCount; i++) {
-    let child = document.createElement('span')
+    const child = document.createElement('span')
     child.classList.add('minute')
-    child.innerText = i*5
-    slider.appendChild(child)
+    child.innerText = i * 5
+    slider.append(child)
   }
+
   slider.innerHTML += '<div class="ruler"></div>'
   const ruler = document.querySelector('.ruler')
-  ruler.style.width = sliderCount * 100 + sliderCount + 'px'
+  ruler.style.width = (sliderCount * 100) + sliderCount + 'px'
 }
 
 initiateUI()
@@ -111,7 +112,7 @@ startBtn.addEventListener('click', () => {
   timer.start(minToMs(workMinutes))
   setState('working')
   slider.classList.add('is-resetting-work')
-  slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
+  slider.style.transform = 'translateX(-' + (workMinutes * 20) + 'px)'
   setTimeout(() => slider.classList.remove('is-resetting-work'), 1000)
 })
 
@@ -139,20 +140,20 @@ timer.on('done', () => {
       setState('breaking')
       timer.start(minToMs(breakMinutes))
       slider.classList.add('is-resetting-break')
-      slider.style.transform = 'translateX(-' + breakMinutes*20 + 'px)'
+      slider.style.transform = 'translateX(-' + (breakMinutes * 20) + 'px)'
       setTimeout(() => slider.classList.remove('is-resetting-break'), 1000)
     } else {
       setState('working')
       timer.start(minToMs(workMinutes))
       slider.classList.add('is-resetting-work')
-      slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
+      slider.style.transform = 'translateX(-' + (workMinutes * 20) + 'px)'
       setTimeout(() => slider.classList.remove('is-resetting-work'), 1000)
     }
   }, 2000)
 })
 
 ipcRenderer.on('CHANGE_TIMER', (event, data) => {
-  let minutes = data.split('/')
+  const minutes = data.split('/')
   workMinutes = minutes[0]
   breakMinutes = minutes[1]
 
@@ -160,7 +161,7 @@ ipcRenderer.on('CHANGE_TIMER', (event, data) => {
   setState('stopped')
   setCurrentMinute(workMinutes)
   mb.showWindow()
-  slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
+  slider.style.transform = 'translateX(-' + (workMinutes * 20) + 'px)'
 })
 
 ipcRenderer.on('TOGGLE_SOUND', (event, data) => {

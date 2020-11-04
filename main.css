@@ -67,12 +67,12 @@
 
 .minute {
   display: inline-block;
-  text-align: center;
   width: 98px;
   margin-left: 2px;
-  transform: translateX(-50%);
   font-size: 24px;
   font-weight: bold;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 .ruler {
