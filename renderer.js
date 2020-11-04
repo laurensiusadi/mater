@@ -4,7 +4,8 @@
 // =============================================================================
 
 // Get menubar instance from main.js
-const {mb} = require('electron').remote.getGlobal('sharedObject')
+const { mb } = require('electron').remote.getGlobal('sharedObject')
+const { ipcRenderer } = require('electron')
 const path = require('path')
 const Timer = require('tiny-timer')
 
@@ -145,4 +146,16 @@ timer.on('done', () => {
       setTimeout(() => slider.classList.remove('is-resetting-work'), 1000)
     }
   }, 2000)
+})
+
+ipcRenderer.on('CHANGE_TIMER', (event, data) => {
+  let minutes = data.split('/')
+  workMinutes = minutes[0]
+  breakMinutes = minutes[1]
+
+  timer.stop()
+  setState('stopped')
+  setCurrentMinute(workMinutes)
+  mb.showWindow()
+  slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
 })

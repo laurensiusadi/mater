@@ -1,4 +1,4 @@
-const {Menu} = require('electron')
+const { Menu } = require('electron')
 const platform = require('os').platform()
 const menubar = require('menubar')
 
@@ -15,7 +15,7 @@ const mb = menubar({
 })
 
 // Make menubar accessible to the renderer
-global.sharedObject = {mb}
+global.sharedObject = { mb }
 
 mb.on('ready', () => {
   console.log('app is ready')
@@ -31,9 +31,32 @@ mb.on('after-create-window', () => {
   mb.window.loadURL(`file://${__dirname}/index.html`)
 
   const contextMenu = Menu.buildFromTemplate([
-    {label: 'Quit', click: () => {
-      mb.app.quit()
-    }}
+    {
+      label: 'Change Timer',
+      submenu: [
+        { label: '25/5',
+          type: 'radio',
+          checked: true,
+          click: () => mb.window.webContents.send('CHANGE_TIMER', '25/5')
+        },
+        { label: '42/18',
+          type: 'radio',
+          checked: false,
+          click: () => mb.window.webContents.send('CHANGE_TIMER', '42/18')
+        },
+        { label: '60/15',
+          type: 'radio',
+          checked: false,
+          click: () => mb.window.webContents.send('CHANGE_TIMER', '60/15')
+        },
+      ]
+    },
+    {
+      label: 'Quit',
+      click: () => {
+        mb.app.quit()
+      }
+    }
   ])
   mb.tray.on('right-click', () => {
     mb.tray.popUpContextMenu(contextMenu)
