@@ -62,12 +62,10 @@
 
 .slider.is-resetting-work {
   transition: 0.5s ease-in-out;
-  transform: translateX(-500px);
 }
 
 .slider.is-resetting-break {
   transition: 0.5s ease-in-out;
-  transform: translateX(-100px);
 }
 
 .minute {

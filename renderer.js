@@ -85,6 +85,7 @@ startBtn.addEventListener('click', () => {
   timer.start(minToMs(workMinutes))
   setState('working')
   slider.classList.add('is-resetting-work')
+  slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
   setTimeout(() => slider.classList.remove('is-resetting-work'), 1000)
 })
 
@@ -112,11 +113,13 @@ timer.on('done', () => {
       setState('breaking')
       timer.start(minToMs(breakMinutes))
       slider.classList.add('is-resetting-break')
+      slider.style.transform = 'translateX(-' + breakMinutes*20 + 'px)'
       setTimeout(() => slider.classList.remove('is-resetting-break'), 1000)
     } else {
       setState('working')
       timer.start(minToMs(workMinutes))
       slider.classList.add('is-resetting-work')
+      slider.style.transform = 'translateX(-' + workMinutes*20 + 'px)'
       setTimeout(() => slider.classList.remove('is-resetting-work'), 1000)
     }
   }, 2000)
