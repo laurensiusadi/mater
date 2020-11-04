@@ -55,9 +55,6 @@
 
 .slider {
   position: relative;
-  left: 297px; /* (600 / 2 - half of width of start line) */
-  width: 600px;
-  text-align: left;
 }
 
 .slider.is-resetting-work {
@@ -70,14 +67,15 @@
 
 .minute {
   display: inline-block;
-  width: 100px;
-  margin-left: -5px;
+  text-align: center;
+  width: 98px;
+  margin-left: 2px;
+  transform: translateX(-50%);
   font-size: 24px;
   font-weight: bold;
 }
 
 .ruler {
-  width: 505px;
   height: 15px;
   margin-top: 5px;
   background-image:

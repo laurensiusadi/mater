@@ -20,8 +20,9 @@ const soundDing = new Audio(path.join(__dirname, '/wav/ding.wav'))
 
 let state = ''
 let currentMinute = 0
-const workMinutes = 25
-const breakMinutes = 5
+const maxMinutes = 60
+let workMinutes = 25
+let breakMinutes = 5
 
 // Timer stuff
 const timer = new Timer()
@@ -34,12 +35,33 @@ const msToMin = ms => ms / 60 / 1000
 
 const getCurrentMinutes = () => state === 'breaking' ? breakMinutes : workMinutes
 
-const getCurrentSliderWidth = () => state === 'breaking' ? 100 : 500
+const getCurrentSliderWidth = () => state === 'breaking' ? breakMinutes*20 : workMinutes*20
 
 const playSound = sound => {
   sound.currentTime = 0
   sound.play()
 }
+
+// UI Control
+// =============================================================================
+
+const initiateUI = () => {
+  let sliderCount = maxMinutes/5
+  slider.style.width = (sliderCount+1) * 100 + 'px'
+  slider.style.left = (sliderCount+1) * 50 - 3 + 'px'
+  slider.innerHTML = ''
+  for (let i = 0; i <= sliderCount; i++) {
+    let child = document.createElement('span')
+    child.classList.add('minute')
+    child.innerText = i*5
+    slider.appendChild(child)
+  }
+  slider.innerHTML += '<div class="ruler"></div>'
+  const ruler = document.querySelector('.ruler')
+  ruler.style.width = sliderCount * 100 + sliderCount + 'px'
+}
+
+initiateUI()
 
 // State handling
 // =============================================================================
